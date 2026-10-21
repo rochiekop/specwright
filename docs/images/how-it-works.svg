@@ -1,0 +1,143 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 300" width="1000" height="300" role="img" aria-labelledby="t d">
+  <title id="t">How Specwright works</title>
+  <desc id="d">Six steps: Idea, Questions, Feature map, PRD, Tasks, Export. A quality check loops on the PRD, and the Revise with AI chat can change the feature map, PRD and tasks.</desc>
+  <style>
+    :root { --bg:#fbfaf7; --card:#ffffff; --line:#d9d6cf; --ink:#1d2421; --muted:#6b726e; --accent:#1f6f5c; --accent-bg:#e3f1ec; }
+    @media (prefers-color-scheme: dark) {
+      :root { --bg:#11161a; --card:#192026; --line:#2c353c; --ink:#e6ebe8; --muted:#8c9893; --accent:#5fd3b1; --accent-bg:#173029; }
+    }
+    text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; }
+    .bg { fill: var(--bg); }
+    .box { fill: var(--card); stroke: var(--line); stroke-width: 1.5; }
+    .num { fill: var(--line); }
+    .numt { fill: var(--ink); font-size: 12px; font-weight: 700; text-anchor: middle; }
+    .name { fill: var(--ink); font-size: 15px; font-weight: 700; text-anchor: middle; }
+    .sub { fill: var(--muted); font-size: 11px; text-anchor: middle; }
+    .who { fill: var(--muted); font-size: 10.5px; letter-spacing: .06em; text-anchor: middle; text-transform: uppercase; }
+    .arrow { stroke: var(--line); stroke-width: 2; fill: none; stroke-dasharray: 4 4; animation: flow 1s linear infinite; }
+    .head { fill: var(--line); }
+    .rail { stroke: var(--line); stroke-width: 2; }
+    .dot { fill: var(--accent); }
+    .halo { fill: var(--accent); opacity: .25; }
+    .loop { stroke: var(--accent); stroke-width: 1.5; fill: none; stroke-dasharray: 5 4; animation: flow 1.2s linear infinite; }
+    .loophead { fill: var(--accent); }
+    .looptext { fill: var(--accent); font-size: 12px; font-weight: 600; text-anchor: middle; }
+    .loopsub { fill: var(--muted); font-size: 11px; text-anchor: middle; }
+
+    /* 12 s cycle: the dot rests 1.2 s on each step, then glides 0.8 s to the next */
+    .s .box { animation: boxOn 12s infinite; }
+    .s .num { animation: numOn 12s infinite; }
+    .s1 .box, .s1 .num { animation-delay: 2s; }
+    .s2 .box, .s2 .num { animation-delay: 4s; }
+    .s3 .box, .s3 .num { animation-delay: 6s; }
+    .s4 .box, .s4 .num { animation-delay: 8s; }
+    .s5 .box, .s5 .num { animation-delay: 10s; }
+    .mover { animation: travel 12s infinite; }
+
+    @keyframes flow { to { stroke-dashoffset: -8; } }
+    @keyframes boxOn {
+      0%, 12% { fill: var(--accent-bg); stroke: var(--accent); }
+      17%, 100% { fill: var(--card); stroke: var(--line); }
+    }
+    @keyframes numOn {
+      0%, 12% { fill: var(--accent); }
+      17%, 100% { fill: var(--line); }
+    }
+    @keyframes travel {
+      0%      { transform: translateX(0);     opacity: 1; animation-timing-function: ease-in-out; }
+      10%     { transform: translateX(0);     animation-timing-function: ease-in-out; }
+      16.667% { transform: translateX(168px); animation-timing-function: ease-in-out; }
+      26.667% { transform: translateX(168px); animation-timing-function: ease-in-out; }
+      33.333% { transform: translateX(336px); animation-timing-function: ease-in-out; }
+      43.333% { transform: translateX(336px); animation-timing-function: ease-in-out; }
+      50%     { transform: translateX(504px); animation-timing-function: ease-in-out; }
+      60%     { transform: translateX(504px); animation-timing-function: ease-in-out; }
+      66.667% { transform: translateX(672px); animation-timing-function: ease-in-out; }
+      76.667% { transform: translateX(672px); animation-timing-function: ease-in-out; }
+      83.333% { transform: translateX(840px); opacity: 1; }
+      96%     { transform: translateX(840px); opacity: 1; }
+      99%     { transform: translateX(840px); opacity: 0; }
+      100%    { transform: translateX(0);     opacity: 0; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .arrow, .loop, .mover, .s .box, .s .num { animation: none; }
+    }
+  </style>
+
+  <rect class="bg" x="0" y="0" width="1000" height="300" rx="14"/>
+
+  <!-- who does the work -->
+  <text class="who" x="80"  y="40">You write</text>
+  <text class="who" x="248" y="40">AI asks · you answer</text>
+  <text class="who" x="416" y="40">AI drafts · you edit</text>
+  <text class="who" x="584" y="40">AI writes · rules check</text>
+  <text class="who" x="752" y="40">AI plans · you track</text>
+  <text class="who" x="920" y="40">Your agent builds</text>
+
+  <!-- arrows between steps -->
+  <g>
+    <path class="arrow" d="M150 100 H174"/><path class="head" d="M174 95 l7 5 -7 5z"/>
+    <path class="arrow" d="M318 100 H342"/><path class="head" d="M342 95 l7 5 -7 5z"/>
+    <path class="arrow" d="M486 100 H510"/><path class="head" d="M510 95 l7 5 -7 5z"/>
+    <path class="arrow" d="M654 100 H678"/><path class="head" d="M678 95 l7 5 -7 5z"/>
+    <path class="arrow" d="M822 100 H846"/><path class="head" d="M846 95 l7 5 -7 5z"/>
+  </g>
+
+  <!-- steps: box x = 12 + i*168, centre = 80 + i*168 -->
+  <g class="s s0">
+    <rect class="box" x="12" y="56" width="136" height="88" rx="10"/>
+    <circle class="num" cx="80" cy="78" r="11"/><text class="numt" x="80" y="82">1</text>
+    <text class="name" x="80" y="110">Idea</text>
+    <text class="sub" x="80" y="128">idea, language, stack</text>
+  </g>
+  <g class="s s1">
+    <rect class="box" x="180" y="56" width="136" height="88" rx="10"/>
+    <circle class="num" cx="248" cy="78" r="11"/><text class="numt" x="248" y="82">2</text>
+    <text class="name" x="248" y="110">Questions</text>
+    <text class="sub" x="248" y="128">3–6 + follow-ups</text>
+  </g>
+  <g class="s s2">
+    <rect class="box" x="348" y="56" width="136" height="88" rx="10"/>
+    <circle class="num" cx="416" cy="78" r="11"/><text class="numt" x="416" y="82">3</text>
+    <text class="name" x="416" y="110">Feature map</text>
+    <text class="sub" x="416" y="128">menus &amp; screens</text>
+  </g>
+  <g class="s s3">
+    <rect class="box" x="516" y="56" width="136" height="88" rx="10"/>
+    <circle class="num" cx="584" cy="78" r="11"/><text class="numt" x="584" y="82">4</text>
+    <text class="name" x="584" y="110">PRD</text>
+    <text class="sub" x="584" y="128">12 sections, versioned</text>
+  </g>
+  <g class="s s4">
+    <rect class="box" x="684" y="56" width="136" height="88" rx="10"/>
+    <circle class="num" cx="752" cy="78" r="11"/><text class="numt" x="752" y="82">5</text>
+    <text class="name" x="752" y="110">Tasks</text>
+    <text class="sub" x="752" y="128">ordered, with deps</text>
+  </g>
+  <g class="s s5">
+    <rect class="box" x="852" y="56" width="136" height="88" rx="10"/>
+    <circle class="num" cx="920" cy="78" r="11"/><text class="numt" x="920" y="82">6</text>
+    <text class="name" x="920" y="110">Export</text>
+    <text class="sub" x="920" y="128">AGENTS.md + files</text>
+  </g>
+
+  <!-- progress rail with travelling dot -->
+  <line class="rail" x1="80" y1="168" x2="920" y2="168"/>
+  <g class="mover">
+    <circle class="halo" cx="80" cy="168" r="11"/>
+    <circle class="dot" cx="80" cy="168" r="6"/>
+  </g>
+
+  <!-- quality loop on the PRD -->
+  <path class="loop" d="M560 186 C 560 222, 608 222, 608 190"/>
+  <path class="loophead" d="M603 192 l5 -8 5 8z"/>
+  <text class="looptext" x="584" y="238">Quality check</text>
+  <text class="loopsub" x="584" y="253">9 rules + AI review · Fix with AI</text>
+
+  <!-- revision chat spans map, PRD and tasks -->
+  <path class="loop" d="M416 186 V272 H752 V186"/>
+  <path class="loophead" d="M411 192 l5 -8 5 8z"/>
+  <path class="loophead" d="M747 192 l5 -8 5 8z"/>
+  <text class="looptext" x="404" y="266" style="text-anchor:end">Revise with AI</text>
+  <text class="loopsub" x="404" y="281" style="text-anchor:end">chat proposes diffs, you accept</text>
+</svg>

@@ -67,29 +67,53 @@ accept or reject.
 
 ## How it works
 
-```
-Idea → Questions → Feature map → PRD → Quality check → Tasks → Export
-         (+ follow-ups)              (versioned)                (AGENTS.md, PRD.md,
-                                                                 features/, tasks/)
-```
+<p align="center">
+  <img src="docs/images/how-it-works.svg" alt="Specwright pipeline: Idea, Questions, Feature map, PRD, Tasks, Export, with a quality-check loop on the PRD and a revision chat across map, PRD and tasks" width="100%">
+</p>
 
-- **Features before prose.** The map is agreed first, and the PRD must list exactly those features, so it stays
-  focused (about 2,400 words). A rule check flags any drift between the two.
-- **A PRD that can be checked.** Sections: Overview, Goals & Success Metrics, Non-goals, Requirements (`FR-n`,
-  `NFR-n`), Core Features, User Flows, Architecture (sequence diagram), Data Model (ER diagram), Tech Stack, Risks &
-  Assumptions, Open Questions, Glossary. Nine instant rule checks (missing sections, uncovered requirements, vague
-  wording, weak acceptance criteria, …) re-run on every version; an AI review checks testability, consistency and
-  scope.
-- **Nothing is overwritten.** PRD versions are append-only. Chat proposals only apply when accepted, and are refused
-  if the target changed in the meantime.
-- **Tasks in a valid order.** Tasks are generated in build order; each feature sees earlier tasks so shared work is
-  reused. Dependencies can only point backwards, so the graph never loops and the exported numbering is a valid run
-  order.
-- **Any model, per step.** Claude through the Anthropic SDK; OpenAI, Gemini, DeepSeek, OpenRouter, Moonshot, Groq,
-  Ollama or any OpenAI-compatible endpoint through the OpenAI SDK. Use a strong model for the PRD and a cheap one for
-  questions. Every AI call is logged in the `generation_runs` table.
+Each step feeds the next, and every step's output stays editable.
+
+| # | Step | What the AI does | What you control | Output |
+|:-:|---|---|---|---|
+| 1 | **Idea** | – | Idea text, output language, tech stack | The plan's brief |
+| 2 | **Questions** | Asks 3–6 typed questions, then up to 3 follow-ups on vague answers | Answer, pick options, or skip | Answers; skipped ones become explicit assumptions |
+| 3 | **Feature map** | Proposes 3–9 features with 2–5 sub-features, phases and priorities | Edit, add, remove, reorder | The agreed scope |
+| 4 | **PRD** | Writes 12 fixed sections around the map, with sequence and ER diagrams | Edit, compare and restore versions | A versioned PRD with `FR-n` / `NFR-n` IDs |
+| 5 | **Tasks** | Plans tasks feature by feature, reusing earlier groundwork | Status, edits, manual tasks | Ordered tasks with layers, criteria and dependencies |
+| 6 | **Export** | – | ZIP or write into your repo | `AGENTS.md`, `PRD.md`, `features/`, `tasks/`, `tasks.json` |
+
+Two loops keep the plan honest:
+
+- **Quality check (on the PRD).** Nine instant rules re-run on every version: missing sections, duplicate or unknown
+  IDs, requirements no feature covers, drift from the feature map, fewer than 3 acceptance criteria, vague words
+  like "fast" without a number, missing diagrams. An AI review adds testability, consistency and scope checks.
+  **Fix with AI** rewrites only the affected section and saves a new version.
+- **Revise with AI (across map, PRD and tasks).** Ask a question and get an answer that cites IDs, or ask for a
+  change and get typed proposals shown as diffs. Nothing changes until you accept, and a proposal is refused if its
+  target changed in the meantime.
+
+### Design principles
+
+- **Scope before prose.** The PRD must list exactly the features on the map, which keeps it short (about 2,400 words)
+  and stops it inventing features.
+- **Nothing is overwritten.** PRD versions are append-only; restoring an old one creates a new version.
+- **Always a valid build order.** Dependencies can only point to earlier tasks, so the task graph cannot loop and the
+  exported numbering (`001-…`, `002-…`) is a run order an agent can follow top to bottom.
+- **Any model, per step.** Claude via the Anthropic SDK; OpenAI, Gemini, DeepSeek, OpenRouter, Moonshot, Groq, Ollama
+  or any OpenAI-compatible endpoint via the OpenAI SDK. Structured steps are validated with Zod, and every call is
+  logged in the `generation_runs` table.
 - **Safe export.** Writing to a folder never touches files Specwright didn't create; a manifest lets re-exports
   clean up only their own old files.
+
+### Under the hood
+
+```
+Browser (React 19)  ──server actions / streaming──▶  Next.js 16 server  ──▶  AI adapters
+                                                        │                    ├─ Anthropic SDK  → Claude
+                                                        │                    └─ OpenAI SDK     → OpenAI, Gemini, Ollama, …
+                                                        ▼
+                                                SQLite (Drizzle ORM)  data/app.db
+```
 
 **Stack:** Next.js 16 (App Router, server actions), React 19, TypeScript, Tailwind 4, SQLite + Drizzle ORM,
 React Flow, Mermaid, Zod.
