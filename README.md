@@ -10,6 +10,22 @@ time.
 It runs locally for one person: no login, no cloud account. API keys stay on the local server, and all data is in
 one SQLite file.
 
+## Screenshots
+
+Sample plan: a RAG chatbot that answers employee questions from company documents.
+
+**Feature map**: agree on menus and screens before the PRD is written.
+
+![Feature map](docs/images/feature-map.png)
+
+**PRD**: versioned, with a quality check and AI rewrite.
+
+![PRD](docs/images/prd.png)
+
+**Tasks**: ordered by dependency on a 4-column board, ready to export for coding agents.
+
+![Tasks board](docs/images/tasks.png)
+
 ## How to use
 
 ### Setup
@@ -37,7 +53,7 @@ Open **Models** and press **Test** on the default model to check your key.
    version you can compare and restore. Run the **quality check** and use **Fix with AI** on the findings.
 5. **Tasks.** Generate tasks feature by feature. Each has a layer (db / backend / frontend / test), acceptance
    criteria and dependencies. Track progress on the 4-column board.
-6. **Export.** Press **Export for coding agents**, download the ZIP or write it into your repository, and paste the
+6. **Export.** Press **Export for agents**, download the ZIP or write it into your repository, and paste the
    kick-off prompt into your agent.
 
 At any step, **Revise with AI** opens a chat that answers questions about the plan or proposes changes as diffs you

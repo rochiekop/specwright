@@ -157,7 +157,7 @@ instead. Tasks you mark *Done* are exported as already ticked.
 
 ## 6. Export for agents
 
-Press **Export for coding agents** on the tasks page. The dialog previews the files and offers two ways to deliver them:
+Press **Export for agents** on the tasks page. The *Export for coding agents* dialog previews the files and offers two ways to deliver them:
 
 - **Download ZIP**.
 - **Write files** into a folder on your machine, for example your new project's repository. Give a full path to an

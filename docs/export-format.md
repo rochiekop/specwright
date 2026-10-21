@@ -1,6 +1,6 @@
 # Export format
 
-**Export for coding agents** (on the tasks page) produces a folder that a coding agent can work through task by task. The
+**Export for agents** (on the tasks page) produces a folder that a coding agent can work through task by task. The
 code that builds it is in `src/lib/export.ts`; the folder writer is in `src/lib/export-folder.ts`.
 
 ## Layout
