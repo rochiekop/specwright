@@ -1,0 +1,1 @@
+ALTER TABLE `tasks` ADD `sub_feature_id` text;

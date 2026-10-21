@@ -1,0 +1,1 @@
+ALTER TABLE `quality_findings` DROP COLUMN `resolved`;

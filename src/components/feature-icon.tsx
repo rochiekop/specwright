@@ -1,0 +1,60 @@
+import {
+  Bell,
+  Box,
+  Calendar,
+  Camera,
+  ChartColumn,
+  CreditCard,
+  FileText,
+  House,
+  LayoutDashboard,
+  List,
+  Lock,
+  Map,
+  MessageCircle,
+  Plus,
+  Search,
+  Settings,
+  Shield,
+  ShoppingCart,
+  Star,
+  Tag,
+  Upload,
+  User,
+  Users,
+  Wallet,
+  type LucideIcon,
+} from "lucide-react";
+import type { FeatureIcon as IconName } from "@/lib/plan-steps";
+
+const ICONS: Record<IconName, LucideIcon> = {
+  dashboard: LayoutDashboard,
+  list: List,
+  plus: Plus,
+  wallet: Wallet,
+  tag: Tag,
+  bell: Bell,
+  chart: ChartColumn,
+  message: MessageCircle,
+  user: User,
+  users: Users,
+  settings: Settings,
+  file: FileText,
+  box: Box,
+  calendar: Calendar,
+  lock: Lock,
+  card: CreditCard,
+  upload: Upload,
+  search: Search,
+  shield: Shield,
+  home: House,
+  cart: ShoppingCart,
+  map: Map,
+  camera: Camera,
+  star: Star,
+};
+
+export function FeatureIcon({ name, className = "h-4 w-4" }: { name: string; className?: string }) {
+  const Icon = ICONS[name as IconName] ?? Box;
+  return <Icon className={className} aria-hidden />;
+}
