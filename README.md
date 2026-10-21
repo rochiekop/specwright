@@ -14,17 +14,23 @@ one SQLite file.
 
 Sample plan: a RAG chatbot that answers employee questions from company documents.
 
-**Feature map**: agree on menus and screens before the PRD is written.
-
-![Feature map](docs/images/feature-map.png)
-
-**PRD**: versioned, with a quality check and AI rewrite.
-
-![PRD](docs/images/prd.png)
-
-**Tasks**: ordered by dependency on a 4-column board, ready to export for coding agents.
-
-![Tasks board](docs/images/tasks.png)
+<table>
+  <tr>
+    <th width="33%">Feature map</th>
+    <th width="33%">PRD</th>
+    <th width="33%">Tasks</th>
+  </tr>
+  <tr>
+    <td><a href="docs/images/feature-map.png"><img src="docs/images/feature-map.png" alt="Feature map"></a></td>
+    <td><a href="docs/images/prd.png"><img src="docs/images/prd.png" alt="PRD"></a></td>
+    <td><a href="docs/images/tasks.png"><img src="docs/images/tasks.png" alt="Tasks board"></a></td>
+  </tr>
+  <tr>
+    <td>Agree on menus and screens before the PRD is written.</td>
+    <td>Versioned, with a quality check and AI rewrite.</td>
+    <td>Ordered by dependency on a 4-column board, ready to export.</td>
+  </tr>
+</table>
 
 ## How to use
 
